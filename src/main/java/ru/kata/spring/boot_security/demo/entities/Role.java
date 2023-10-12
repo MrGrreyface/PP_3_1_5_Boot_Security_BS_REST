@@ -1,10 +1,8 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 import org.springframework.security.core.GrantedAuthority;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -50,7 +48,7 @@ public class Role implements GrantedAuthority {
     }
     @Override
     public String getAuthority() {
-        return null;
+        return getName();
     }
 
     @Override
@@ -80,6 +78,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.name;
+        return getName();
     }
 }
