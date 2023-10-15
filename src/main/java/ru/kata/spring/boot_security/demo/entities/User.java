@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.entities;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +16,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Name should no be empty!")
     private String name;
+    @NotEmpty(message = "Lastname should no be empty!")
     private  String lastName;
+    @NotEmpty(message = "Username should no be empty!")
     private String username;
+    @NotEmpty(message = "Password should no be empty!")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
                 joinColumns = @JoinColumn(name = "users_id"),
                 inverseJoinColumns = @JoinColumn(name = "roles_id"))
