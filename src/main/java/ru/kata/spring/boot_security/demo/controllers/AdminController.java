@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @GetMapping
-    public String allUsers(Model model, Principal principal) {
+    public String showAllUsers(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
         List<User> userList = userService.getAll();
@@ -42,13 +42,13 @@ public class AdminController {
         List<Role> roles = roleService.getAllRoles();
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
-        return "user-form";
+        return "newUser-form";
     }
 
     @PostMapping("/save")
-    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam("roles") List<Role> roles) {
+    public String saveNewUser (@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam("roles") List<Role> roles) {
         if (bindingResult.hasErrors()) {
-            return "user-form";
+            return "newUser-form";
         }
         user.setRoles(roles.stream().collect(Collectors.toSet()));
         userService.saveUser(user);
@@ -56,7 +56,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/update")
-    public String updateUserForm(Model model, @PathVariable("id") Long id) {
+    public String updateUser(Model model, @PathVariable("id") Long id) {
         User user = userService.findById(id);
         List<Role> roles = roleService.getAllRoles();
         model.addAttribute("user", user);
@@ -65,7 +65,7 @@ public class AdminController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam("id") Long id) {
+    public String saveUpdatedUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "edit-form";
         }

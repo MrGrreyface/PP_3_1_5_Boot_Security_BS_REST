@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,16 +20,17 @@ public class User implements UserDetails {
     @NotEmpty(message = "Name should no be empty!")
     private String name;
     @NotEmpty(message = "Lastname should no be empty!")
-    private  String lastName;
+    private String lastName;
     @NotEmpty(message = "Username should no be empty!")
     private String username;
     @NotEmpty(message = "Password should no be empty!")
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
-                joinColumns = @JoinColumn(name = "users_id"),
-                inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
+
     public User() {
 
     }
@@ -68,7 +70,6 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
 
     public void setPassword(String password) {
@@ -117,5 +118,21 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(),
+                user.getName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getUsername(),
+                user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getRoles(),
+                user.getRoles());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastName(), getUsername(), getPassword(), getRoles());
     }
 }

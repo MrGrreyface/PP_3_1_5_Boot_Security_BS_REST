@@ -2,35 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit User</title>
+    <title>New User</title>
 </head>
 <body>
-<h1>Edit User</h1>
-<form th:action="@{/admin/{id}/update(id=${user.id})}" th:object="${user}" th:method="post">
-    <input type="hidden" th:field="*{id}">
+<h1>New User</h1>
+<form th:action="@{/admin/save}" th:object="${user}" method="post">
     <label>Name:</label>
-    <input type="text" th:field="*{name}" required>
+    <input type="text" th:field="*{name}">
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</div>
     <br>
     <label>Lastname:</label>
-    <input type="text" th:field="*{lastName}" required>
+    <input type="text" th:field="*{lastName}">
     <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red">Name error</div>
     <br>
     <label>Username:</label>
-    <input type="text" th:field="*{username}" required>
+    <input type="text" th:field="*{username}">
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">Name error</div>
     <br>
     <label>Password:</label>
-    <input type="password" th:field="*{password}" required>
+    <input type="password" th:field="*{password}">
     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red">Name error</div>
     <br>
     <label>Roles:</label>
     <select multiple size="2" name="roles" required class="form-control form-control-sm">
         <option value="1">ROLE_USER</option>
-        <option value="2">ROLE_ADMIN</option>
+        <option selected="selected" value="2">ROLE_ADMIN</option>
     </select>
     <br>
-    <button type="submit">Update</button>
+    <button type="submit">Save</button>
 </form>
 <input align="right" type="button" value="logout"
        onclick="window.location.href = '/logout'"/>
