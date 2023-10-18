@@ -69,7 +69,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "edit-form";
         }
-        userService.update(user);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 
