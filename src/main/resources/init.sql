@@ -5,3 +5,4 @@ insert into users(id, name, last_name, username, password) values (1 ,'admin', '
 insert into roles(id, name) VALUES (1, 'ROLE_USER');
 insert into roles(id, name) VALUES (2, 'ROLE_ADMIN');
 insert into users_roles(users_id, roles_id) VALUES (1, 2)
+-- Логин и пароль admin

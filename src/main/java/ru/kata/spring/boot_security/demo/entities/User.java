@@ -1,14 +1,11 @@
 package ru.kata.spring.boot_security.demo.entities;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -17,13 +14,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Name should no be empty!")
     private String name;
-    @NotEmpty(message = "Lastname should no be empty!")
     private String lastName;
-    @NotEmpty(message = "Username should no be empty!")
+    private byte age;
+
     private String username;
-    @NotEmpty(message = "Password should no be empty!")
+
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
@@ -120,12 +116,20 @@ public class User implements UserDetails {
         return true;
     }
 
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(),
+        return getAge() == user.getAge() && Objects.equals(getId(), user.getId()) && Objects.equals(getName(),
                 user.getName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getUsername(),
                 user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getRoles(),
                 user.getRoles());
@@ -133,6 +137,6 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLastName(), getUsername(), getPassword(), getRoles());
+        return Objects.hash(getId(), getName(), getLastName(), getAge(), getUsername(), getPassword(), getRoles());
     }
 }
